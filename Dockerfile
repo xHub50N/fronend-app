@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 3000
 
 # Uruchom Vite na porcie 3000
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]
+CMD ["npm", "start", "--", "--host", "0.0.0.0", "--port", "3000"]
