@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <section className="max-w-md mx-auto p-6 bg-project-dark-bg rounded-lg shadow-2xl">
             <img src = {logo} alt="My Happy SVG"/>
-            <div className="text-2xl font-bold text-white">HEJ CO TAM </div>
+            <div className="text-2xl font-bold text-white">HEJ CO TAM PONOWNIE </div>
             {/* <button
                     className="w-full mt-4 py-2 bg-project-yellow text-project-dark font-semibold rounded-lg hover:bg-project-yellow-buttons focus:outline-none focus:ring-2 focus:ring-yellow-buttons"
                 >Learn More</button>
