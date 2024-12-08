@@ -16,21 +16,21 @@ pipeline {
     }
 
     stages {
-        stage('Setup SSH Key') {
-            steps {
-                script {
-                    if (!fileExists(env.SSH_LOCAL_KEY_PATH)) {
-                        error "SSH key not found at: ${env.SSH_LOCAL_KEY_PATH}"
-                    }
+        // stage('Setup SSH Key') {
+        //     steps {
+        //         script {
+        //             if (!fileExists(env.SSH_LOCAL_KEY_PATH)) {
+        //                 error "SSH key not found at: ${env.SSH_LOCAL_KEY_PATH}"
+        //             }
 
-                    sh """
-                        eval \$(ssh-agent -s)
-                        ssh-add ${env.SSH_LOCAL_KEY_PATH}
-                        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-                    """
-                }
-            }
-        }
+        //             sh """
+        //                 eval \$(ssh-agent -s)
+        //                 ssh-add ${env.SSH_LOCAL_KEY_PATH}
+        //                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+        //             """
+        //         }
+        //     }
+        // }
 
         stage('Prepare Folder') {
             steps {
