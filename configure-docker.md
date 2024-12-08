@@ -1,6 +1,6 @@
 # witam w poradniku tworzenia wlasnego srodowiska pod docker
 # Aktualny poradnik pomaga zautomatyzować proces tworzenia kontenerów (Takie proste CI/CD)
-
+/
 ## Do poprawnego rozpoczęcia musimy zacząć od konfiguracji uwierzytelniania do github za pomocą klucza publicznego
 ### 1. Konfiguracja klucza publicznego na github:
 1. Tworzymy parę klucza na naszym linuksie: 
