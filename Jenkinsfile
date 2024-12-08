@@ -10,9 +10,9 @@ pipeline {
         TARGET_IP = "192.168.68.150"
         FOLDER_PATH = "/var/lib/jenkins/workspace/Cupid"
         DATA_FOLDER_PATH = "data"
-        GIT_REPO_URL = "git@github.com:xHub50N/fronend-app.git"
+        GIT_REPO_URL = "git@github.com:xHub50N/jenkins-test.git"
         BRANCH_NAME = "main"
-        REPO_DIR = "fronend-app"
+        REPO_DIR = "jenkins-test"
         GIT_CREDENTIALS_ID = "cupid"
     }
 
