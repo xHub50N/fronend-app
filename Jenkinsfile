@@ -17,22 +17,6 @@ pipeline {
     }
 
     stages {
-        // stage('Setup SSH Key') {
-        //     steps {
-        //         script {
-        //             if (!fileExists(env.SSH_LOCAL_KEY_PATH)) {
-        //                 error "SSH key not found at: ${env.SSH_LOCAL_KEY_PATH}"
-        //             }
-
-        //             sh """
-        //                 eval \$(ssh-agent -s)
-        //                 ssh-add ${env.SSH_LOCAL_KEY_PATH}
-        //                 ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-        //             """
-        //         }
-        //     }
-        // }
-
         stage('Prepare Folder') {
             steps {
                 script {
@@ -50,28 +34,28 @@ pipeline {
             }
         }
 
-stage('Clone or Update Repository') {
-           steps {
-               dir("${env.FOLDER_PATH}") {
-                   sshagent(['github-ssh-key']) {
-                       sh """
-                           pwd
-                           if [ -d "${env.REPO_DIR}" ]; then
-                               echo "Repository exists. Pulling latest changes..."
-                               cd ${env.REPO_DIR}
-                               git fetch origin
-                               git checkout ${env.BRANCH_NAME}
-                               git pull origin ${env.BRANCH_NAME}
-                           else
-                               echo "Cloning repository..."
-                               git clone ${env.GIT_REPO_URL}
-                               cd ${env.REPO_DIR}
-                           fi
-                       """
-                   }
-               }
-           }
-       }
+        stage('Clone or Update Repository') {
+            steps {
+                dir("${env.FOLDER_PATH}") {
+                    sshagent(['github-ssh-key']) {
+                        sh """
+                            pwd
+                            if [ -d "${env.REPO_DIR}" ]; then
+                                echo "Repository exists. Pulling latest changes..."
+                                cd ${env.REPO_DIR}
+                                git fetch origin
+                                git checkout ${env.BRANCH_NAME}
+                                git pull origin ${env.BRANCH_NAME}
+                            else
+                                echo "Cloning repository..."
+                                git clone ${env.GIT_REPO_URL}
+                                cd ${env.REPO_DIR}
+                            fi
+                        """
+                    }
+                }
+            }
+        }
 
 
        stage('Create Data Folders') {
