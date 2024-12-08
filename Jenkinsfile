@@ -55,28 +55,28 @@ stage('Clone or Update Repository') {
         dir("${env.FOLDER_PATH}") {
             withCredentials([string(credentialsId: env.GIT_CREDENTIALS_ID, variable: 'GITHUB_TOKEN')]) {
                 script {
-                    sh """
+                    sh '''
                         pwd
-                        if [ -d "${env.REPO_DIR}" ]; then
+                        if [ -d "${REPO_DIR}" ]; then
                             echo "Repository exists. Pulling latest changes..."
-                            cd ${env.REPO_DIR}
+                            cd ${REPO_DIR}
                             git config credential.helper 'store --file=.git-credentials'
                             echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > .git-credentials
                             git fetch origin
-                            git checkout ${env.BRANCH_NAME}
-                            git pull origin ${env.BRANCH_NAME}
-                            
+                            git checkout ${BRANCH_NAME}
+                            git pull origin ${BRANCH_NAME}
                         else
                             echo "Cloning repository..."
                             git clone https://${GITHUB_TOKEN}:x-oauth-basic@github.com/xHub50N/fronend-app.git
                         fi
-                    """
-                    sh "rm -f ${env.REPO_DIR}/.git-credentials"
+                        rm -f .git-credentials
+                    '''
                 }
             }
         }
     }
 }
+
 
        stage('Create Data Folders') {
            steps {
