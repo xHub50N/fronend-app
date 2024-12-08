@@ -57,6 +57,7 @@ stage('Clone or Update Repository') {
                 script {
                     sh '''
                         pwd
+                        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
                         if [ -d "${REPO_DIR}" ]; then
                             echo "Repository exists. Pulling latest changes..."
                             cd ${REPO_DIR}
