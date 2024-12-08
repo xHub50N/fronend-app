@@ -13,6 +13,7 @@ pipeline {
         GIT_REPO_URL = "git@github.com:xHub50N/fronend-app.git"
         BRANCH_NAME = "main"
         REPO_DIR = "fronend-app"
+        GIT_CREDENTIALS_ID = "cupid"
     }
 
     stages {
@@ -49,28 +50,33 @@ pipeline {
             }
         }
 
-       stage('Clone or Update Repository') {
-           steps {
-               dir("${env.FOLDER_PATH}") {
-                   script {
-                       sh """
-                           pwd
-                           if [ -d "${env.REPO_DIR}" ]; then
-                               echo "Repository exists. Pulling latest changes..."
-                               cd ${env.REPO_DIR}
-                               git fetch origin
-                               git checkout ${env.BRANCH_NAME}
-                               git pull origin ${env.BRANCH_NAME}
-                           else
-                               echo "Cloning repository..."
-                               git clone ${env.GIT_REPO_URL}
-                               cd ${env.REPO_DIR}
-                           fi
-                       """
-                   }
-               }
-           }
-       }
+stage('Clone or Update Repository') {
+    steps {
+        dir("${env.FOLDER_PATH}") {
+            withCredentials([string(credentialsId: env.GIT_CREDENTIALS_ID, variable: 'GITHUB_TOKEN')]) {
+                script {
+                    sh """
+                        pwd
+                        if [ -d "${env.REPO_DIR}" ]; then
+                            echo "Repository exists. Pulling latest changes..."
+                            cd ${env.REPO_DIR}
+                            git config credential.helper 'store --file=.git-credentials'
+                            echo "https://${GITHUB_TOKEN}:x-oauth-basic@github.com" > .git-credentials
+                            git fetch origin
+                            git checkout ${env.BRANCH_NAME}
+                            git pull origin ${env.BRANCH_NAME}
+                            
+                        else
+                            echo "Cloning repository..."
+                            git clone https://${GITHUB_TOKEN}:x-oauth-basic@github.com/xHub50N/fronend-app.git
+                        fi
+                    """
+                    sh "rm -f ${env.REPO_DIR}/.git-credentials"
+                }
+            }
+        }
+    }
+}
 
        stage('Create Data Folders') {
            steps {
