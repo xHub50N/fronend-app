@@ -53,7 +53,7 @@ pipeline {
 stage('Clone or Update Repository') {
            steps {
                dir("${env.FOLDER_PATH}") {
-                   script {
+                   sshagent(['github-ssh-key']) {
                        sh """
                            pwd
                            if [ -d "${env.REPO_DIR}" ]; then
