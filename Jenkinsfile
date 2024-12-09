@@ -102,6 +102,17 @@ pipeline {
                }
            }
        }
+        stage('Cleanup') {
+           steps {
+               dir("${env.FOLDER_PATH}") {
+                   script {
+                       sh """
+                        find ${env.FOLDER_PATH} -mindepth 1 -maxdepth 1 ! -name 'data' ! -name '${env.REPO_DIR}' -exec rm -rf {} +
+                       """
+                   }
+               }
+           }
+       }
    }
 
     post {
