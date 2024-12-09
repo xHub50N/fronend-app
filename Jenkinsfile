@@ -82,6 +82,8 @@ pipeline {
                            echo "Replacing <your-ip-address> with ${env.TARGET_IP} in docker-compose.yaml"
                            sed -i "s/<your-ip-address>/${env.TARGET_IP}/g" docker-compose.yaml
                            sed -i "s|{URL}|http://${env.TARGET_IP}:8080/api|g" docker-compose.yaml
+                           sed -i "s|/docker_github/data/database/|${env.FOLDER_PATH}/data/database/|g" docker-compose.yaml
+                           sed -i "s|/docker_github/data/backend/zdjecia/|${env.FOLDER_PATH}/data/backend/zdjecia/|g" docker-compose.yaml
                        """
                     }
                 }
